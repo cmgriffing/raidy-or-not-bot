@@ -1,0 +1,54 @@
+{
+  "name": "raidy-or-not",
+  "version": "0.0.1",
+  "main": "dist/main/index.cjs",
+  "author": "Chris Griffing <cmgriffing@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "node scripts/watch.mjs",
+    "prebuild": "vue-tsc --noEmit --p packages/renderer/tsconfig.json && node scripts/build.mjs",
+    "build": "electron-builder",
+    "init": "git config core.hooksPath .git/hooks/ && rm -rf .git/hooks && npx simple-git-hooks",
+    "test:e2e": "npx playwright test",
+    "test:e2e:headless": "npx playwright test --headed"
+  },
+  "engines": {
+    "node": ">=14.17.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.20.2",
+    "@types/tmi.js": "^1.8.1",
+    "@vitejs/plugin-vue": "^2.1.0",
+    "autoprefixer": "^10.4.4",
+    "electron": "18.0.2",
+    "electron-builder": "^22.14.5",
+    "nano-staged": "^0.6.0",
+    "postcss": "^8.4.12",
+    "primeicons": "^5.0.0",
+    "simple-git-hooks": "^2.7.0",
+    "tailwindcss": "^3.0.24",
+    "typescript": "^4.6.3",
+    "vite": "^2.9.1",
+    "vite-plugin-electron": "^0.4.2",
+    "vite-plugin-resolve": "^2.0.1",
+    "vue": "^3.2.31",
+    "vue-tsc": "^0.31.1"
+  },
+  "env": {
+    "VITE_DEV_SERVER_HOST": "127.0.0.1",
+    "VITE_DEV_SERVER_PORT": 3344
+  },
+  "keywords": [
+    "electron",
+    "rollup",
+    "vite",
+    "vue3",
+    "vue"
+  ],
+  "dependencies": {
+    "axios": "^0.26.1",
+    "electron-store": "^8.0.1",
+    "primevue": "^3.12.5",
+    "tmi.js": "^1.8.5"
+  }
+}
