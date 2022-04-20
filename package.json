@@ -1,13 +1,14 @@
 {
   "name": "raidy-or-not",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "main": "dist/main/index.cjs",
   "author": "Chris Griffing <cmgriffing@gmail.com>",
   "license": "MIT",
+  "repository": "https://github.com/cmgriffing/raidy-or-not-bot",
   "scripts": {
     "dev": "node scripts/watch.mjs",
     "prebuild": "vue-tsc --noEmit --p packages/renderer/tsconfig.json && node scripts/build.mjs",
-    "build": "electron-builder",
+    "build": "electron-builder -m -l -w -p always",
     "init": "git config core.hooksPath .git/hooks/ && rm -rf .git/hooks && npx simple-git-hooks",
     "test:e2e": "npx playwright test",
     "test:e2e:headless": "npx playwright test --headed"

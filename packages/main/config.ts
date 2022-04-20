@@ -3,6 +3,6 @@ export const config = {
     baseApiUrl: "http://localhost:3000/api",
   },
   prod: {
-    baseApiUrl: "http://raidy-or-not.vercel.app/api",
+    baseApiUrl: "https://raidy-or-not.vercel.app/api",
   },
 };
