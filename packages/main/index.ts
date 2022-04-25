@@ -16,6 +16,17 @@ import Store from "electron-store";
 import LightBulbImage from "../images/light-bulb.png";
 import ConnectedImage from "../images/connected.png";
 import DisconnectedImage from "../images/disconnected.png";
+import Logo from "../images/logo.png";
+import LogoRed from "../images/logo-red.png";
+
+const LogoImage = nativeImage
+  .createFromDataURL(Logo)
+  .resize({ width: 16, height: 16 });
+
+const LogoRedImage = nativeImage
+  .createFromDataURL(LogoRed)
+  .resize({ width: 16, height: 16 });
+
 const ipc = electron.ipcMain;
 
 const store = new Store({
@@ -66,7 +77,7 @@ interface TmiConfig {
   apiKey: string;
 }
 
-let { baseApiUrl = "" } = config.dev;
+let { baseApiUrl = "localhost:3000/api" } = config.dev;
 if (app.isPackaged) {
   baseApiUrl = config.prod.baseApiUrl;
 }
@@ -99,15 +110,19 @@ async function createWindow() {
     },
     width: 200,
     height: 300,
-    resizable: false,
+    resizable: app.isPackaged ? false : true,
     maximizable: false,
     fullscreenable: false,
     show: false,
   });
 
+  win.on("closed", function () {
+    win = null;
+  });
+
   if (app.isPackaged) {
     win.loadFile(join(__dirname, "../renderer/index.html"));
-    // win.webContents.openDevTools();
+    win.webContents.openDevTools();
   } else {
     // 🚧 Use ['ENV_NAME'] avoid vite:define plugin
     const url = `http://${process.env["VITE_DEV_SERVER_HOST"]}:${process.env["VITE_DEV_SERVER_PORT"]}`;
@@ -157,16 +172,13 @@ app
       typeof store.get("apiKey")
     );
 
-    tray = new Tray(
-      nativeImage
-        .createFromDataURL(LightBulbImage)
-        .resize({ width: 16, height: 16 })
-    );
+    tray = new Tray(LogoRedImage);
 
     buildTrayMenu();
   })
   .then(createWindow)
   .then(() => {
+    win?.show();
     if (!store.get("channelName") || !store.get("apiKey")) {
       win?.show();
     }
@@ -204,21 +216,25 @@ async function connectTmi({ channelName, apiKey }: TmiConfig) {
     headers: {
       Authorization: `ApiKey ${apiKey}`,
     },
+    timeout: 5000,
   });
 
+  console.log("axios created");
+
   const validApiKey = await apiAxios
-    .post("/validate-api-key")
+    .post("/post-validate-api-key")
     .then(() => {
       console.log("key is valid");
       return true;
     })
-    .catch(() => {
-      console.log("key is NOT valid");
+    .catch((e: any) => {
+      console.log("key is NOT valid", e);
       return false;
     });
 
   if (!validApiKey) {
     connected = false;
+    setTrayImage();
     sendConnectedStatus();
     buildTrayMenu();
     return;
@@ -236,12 +252,14 @@ async function connectTmi({ channelName, apiKey }: TmiConfig) {
     .connect()
     .then(() => {
       connected = true;
+      setTrayImage();
       sendConnectedStatus();
       buildTrayMenu();
     })
     .catch((error) => {
       console.error(error);
       connected = false;
+      setTrayImage();
       sendConnectedStatus();
       buildTrayMenu();
     });
@@ -249,13 +267,14 @@ async function connectTmi({ channelName, apiKey }: TmiConfig) {
   client.on("hosting", async (channel, target, viewers) => {
     console.log("HOSTING", channel, target, viewers);
     const postResult = apiAxios
-      .post("/raids", {
+      .post("/post-raids", {
         toTwitchChannel: target,
         fromTwitchChannel: channelName,
         raidAmount: 42,
       })
       .catch(() => {
         connected = false;
+        setTrayImage();
         sendConnectedStatus();
         buildTrayMenu();
       });
@@ -264,13 +283,14 @@ async function connectTmi({ channelName, apiKey }: TmiConfig) {
   client.on("raided", async (channel, target, viewers) => {
     console.log("RAIDED", channel, target, viewers);
     const postResult = await apiAxios
-      .post("/raids", {
+      .post("/post-raids", {
         toTwitchChannel: channelName,
         fromTwitchChannel: target,
         raidAmount: 42,
       })
       .catch(() => {
         connected = false;
+        setTrayImage();
         sendConnectedStatus();
         buildTrayMenu();
       });
@@ -305,6 +325,13 @@ function buildTrayMenu() {
         win?.show();
       },
     },
+    {
+      label: "Quit",
+      type: "normal",
+      click: (menuItem, browserWindow, event) => {
+        app.quit();
+      },
+    },
   ]);
 
   if (tray) {
@@ -315,4 +342,9 @@ function buildTrayMenu() {
 
 function sendConnectedStatus() {
   win?.webContents.send("connectionStatus", [{ connected }]);
+}
+
+function setTrayImage() {
+  const image = !!connected ? LogoImage : LogoRedImage;
+  tray?.setImage(image);
 }
