@@ -1,6 +1,6 @@
 {
   "name": "raidy-or-not",
-  "version": "0.0.4",
+  "version": "0.0.6",
   "main": "dist/main/index.cjs",
   "author": "Chris Griffing <cmgriffing@gmail.com>",
   "license": "MIT",
