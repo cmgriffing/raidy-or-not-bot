@@ -358,6 +358,12 @@ function buildTrayMenu() {
   ]);
 
   if (tray) {
+    tray.on("click", () => {
+      win?.show();
+    });
+    tray.on("double-click", () => {
+      win?.show();
+    });
     tray.setToolTip("Raidy or Not Bot");
     tray.setContextMenu(contextMenu);
   }
