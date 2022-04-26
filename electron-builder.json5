@@ -28,6 +28,6 @@
     deleteAppDataOnUninstall: false,
   },
   snap: {
-    publish: false,
+    publish: ["github"],
   },
 }
