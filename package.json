@@ -1,14 +1,14 @@
 {
   "name": "raidy-or-not",
-  "version": "0.0.6",
+  "version": "0.0.8",
   "main": "dist/main/index.cjs",
   "author": "Chris Griffing <cmgriffing@gmail.com>",
   "license": "MIT",
   "repository": "https://github.com/cmgriffing/raidy-or-not-bot",
   "scripts": {
     "dev": "node scripts/watch.mjs",
-    "prebuild": "vue-tsc --noEmit --p packages/renderer/tsconfig.json && node scripts/build.mjs",
-    "build": "electron-builder -m -l -w -p always",
+    "build": "vue-tsc --noEmit --p packages/renderer/tsconfig.json && node scripts/build.mjs",
+    "build:old": "electron-builder -m -l -w -p always",
     "init": "git config core.hooksPath .git/hooks/ && rm -rf .git/hooks && npx simple-git-hooks",
     "test:e2e": "npx playwright test",
     "test:e2e:headless": "npx playwright test --headed"
@@ -17,6 +17,7 @@
     "node": ">=14.17.0"
   },
   "devDependencies": {
+    "@electron-forge/publisher-github": "^6.0.0-beta.63",
     "@playwright/test": "^1.20.2",
     "@types/tmi.js": "^1.8.1",
     "@vitejs/plugin-vue": "^2.1.0",
