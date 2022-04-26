@@ -1,6 +1,6 @@
 {
   "name": "raidy-or-not",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "main": "dist/main/index.cjs",
   "author": "Chris Griffing <cmgriffing@gmail.com>",
   "license": "MIT",
@@ -34,6 +34,7 @@
     "vite-plugin-electron": "^0.4.2",
     "vite-plugin-resolve": "^2.0.1",
     "vue": "^3.2.31",
+    "vue-cli": "^2.9.6",
     "vue-tsc": "^0.31.1"
   },
   "env": {
