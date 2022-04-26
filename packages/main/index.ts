@@ -43,6 +43,7 @@ const store = new Store({
 
 let tmiInstance: tmi.Client | undefined;
 let connected = false;
+let isQuitting = false;
 
 console.log("setting up watchers");
 ipc.on("configChanged", async (event, args) => {
@@ -112,13 +113,33 @@ async function createWindow() {
     height: 300,
     // resizable: app.isPackaged ? false : true,
     resizable: true,
+    minimizable: false,
     maximizable: false,
     fullscreenable: false,
     show: false,
+    autoHideMenuBar: true,
   });
 
-  win.on("closed", function () {
-    win = null;
+  win.on("close", function (event: any) {
+    if (!isQuitting && win) {
+      console.log("hiding window");
+      event.preventDefault();
+      win.hide();
+    } else {
+      console.log("closing window");
+      win = null;
+    }
+
+    return false;
+  });
+  app.on("before-quit", function () {
+    console.log("before quit");
+    isQuitting = true;
+  });
+
+  win.on("minimize", function (event: any) {
+    event.preventDefault();
+    win?.hide();
   });
 
   if (app.isPackaged) {
@@ -330,6 +351,7 @@ function buildTrayMenu() {
       label: "Quit",
       type: "normal",
       click: (menuItem, browserWindow, event) => {
+        isQuitting = true;
         app.quit();
       },
     },
