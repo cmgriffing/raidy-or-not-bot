@@ -38,7 +38,7 @@ jobs:
           node-version: 14
 
       - name: Build/release Electron app
-        uses: samuelmeuli/action-electron-builder@v1
+        uses: cmgriffing/action-electron-builder@v1.7.0
         with:
           github_token: ${{ secrets.github_token }}
           release: ${{ startsWith(github.ref, 'refs/tags/dev-v') }}
