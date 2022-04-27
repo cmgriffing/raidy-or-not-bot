@@ -1,4 +1,4 @@
-name: Dev Build/release
+name: Dev Build/Release
 
 on:
   create:
