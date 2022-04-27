@@ -25,6 +25,7 @@ jobs:
           body: ${{ steps.tag_version.outputs.changelog }}
   release:
     runs-on: ${{ matrix.os }}
+    needs: build
 
     strategy:
       matrix:
