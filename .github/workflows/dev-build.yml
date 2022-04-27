@@ -7,6 +7,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    outputs:
+      custom_tag: ${{ steps.tag_version.outputs.new_tag }}
     steps:
       - uses: actions/checkout@v2
       - name: Bump version and push tag
@@ -38,8 +40,8 @@ jobs:
           node-version: 14
 
       - name: Build/release Electron app
-        uses: cmgriffing/action-electron-builder@v1.7.1
+        uses: cmgriffing/action-electron-builder@v1.7.2
         with:
           github_token: ${{ secrets.github_token }}
           release: true
-          custom_tag: ${{ steps.tag_version.outputs.new_tag }}
+          custom_tag: ${{ needs.build.outputs.custom_tag }}
