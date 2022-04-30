@@ -20,7 +20,7 @@ import Logo from "../images/logo.png";
 import LogoRed from "../images/logo-red.png";
 
 const SHOULD_SHOW_DEV_TOOLS =
-  process.env.DEV_BUILD === ("true" || true) || false;
+  import.meta.env.VITE_DEV_BUILD === ("true" || true) || false;
 
 const LogoImage = nativeImage
   .createFromDataURL(Logo)
