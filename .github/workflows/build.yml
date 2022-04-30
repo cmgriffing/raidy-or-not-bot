@@ -2,8 +2,8 @@ name: Build/release
 
 on:
   push:
-    tags:
-      - "v*"
+    branches:
+      - main
 
 jobs:
   build:
@@ -47,8 +47,8 @@ jobs:
           # (No need to define this secret in the repo settings)
           github_token: ${{ secrets.github_token }}
           custom_tag: ${{ needs.build.outputs.custom_tag }}
-          release: true
+          # release: true
 
           # If the commit is tagged with a version (e.g. "v1.0.0"),
           # release the app after building
-          # release: ${{ !endsWith(github.ref, '-dev') }}
+          release: ${{ !endsWith(github.ref, '-dev') }}

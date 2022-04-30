@@ -3,7 +3,7 @@ name: Dev Build/Release
 on:
   push:
     branches:
-      - main
+      - development
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -44,5 +44,5 @@ jobs:
         uses: cmgriffing/action-electron-builder@v1.7.7
         with:
           github_token: ${{ secrets.github_token }}
-          release: true
+          release: ${{ endsWith(github.ref, '-dev') }}
           custom_tag: ${{ needs.build.outputs.custom_tag }}
