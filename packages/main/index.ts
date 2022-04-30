@@ -19,6 +19,9 @@ import DisconnectedImage from "../images/disconnected.png";
 import Logo from "../images/logo.png";
 import LogoRed from "../images/logo-red.png";
 
+const SHOULD_SHOW_DEV_TOOLS =
+  process.env.DEV_BUILD === ("true" || true) || false;
+
 const LogoImage = nativeImage
   .createFromDataURL(Logo)
   .resize({ width: 16, height: 16 });
@@ -112,7 +115,7 @@ async function createWindow() {
     width: 200,
     height: 300,
     // resizable: app.isPackaged ? false : true,
-    resizable: true,
+    resizable: SHOULD_SHOW_DEV_TOOLS,
     minimizable: false,
     maximizable: false,
     fullscreenable: false,
@@ -144,7 +147,9 @@ async function createWindow() {
 
   if (app.isPackaged) {
     win.loadFile(join(__dirname, "../renderer/index.html"));
-    win.webContents.openDevTools();
+    if (SHOULD_SHOW_DEV_TOOLS) {
+      win.webContents.openDevTools();
+    }
   } else {
     // 🚧 Use ['ENV_NAME'] avoid vite:define plugin
     const url = `http://${process.env["VITE_DEV_SERVER_HOST"]}:${process.env["VITE_DEV_SERVER_PORT"]}`;

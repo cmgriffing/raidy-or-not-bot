@@ -17,12 +17,6 @@ jobs:
         uses: cmgriffing/github-tag-action@v6.1.5
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-      # - name: Create a GitHub release
-      #   uses: ncipollo/release-action@v1
-      #   with:
-      #     tag: ${{ steps.tag_version.outputs.new_tag }}
-      #     name: Release ${{ steps.tag_version.outputs.new_tag }}
-      #     body: ${{ steps.tag_version.outputs.changelog }}
   release:
     runs-on: ${{ matrix.os }}
     needs: build
@@ -48,7 +42,3 @@ jobs:
           github_token: ${{ secrets.github_token }}
           custom_tag: ${{ needs.build.outputs.custom_tag }}
           release: true
-
-          # If the commit is tagged with a version (e.g. "v1.0.0"),
-          # release the app after building
-          # release: ${{ !endsWith(github.ref, '-dev') }}
