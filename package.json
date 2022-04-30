@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "node scripts/watch.mjs",
     "build": "vue-tsc --noEmit --p packages/renderer/tsconfig.json && node scripts/build.mjs",
-    "build:dev": "DEV_BUILD=true vue-tsc --noEmit --p packages/renderer/tsconfig.json && DEV_BUILD=true node scripts/build.mjs",
+    "build:dev": "cross-env DEV_BUILD=true vue-tsc --noEmit --p packages/renderer/tsconfig.json && cross-env DEV_BUILD=true node scripts/build.mjs",
     "build:old": "electron-builder -m -l -w -p always",
     "init": "git config core.hooksPath .git/hooks/ && rm -rf .git/hooks && npx simple-git-hooks",
     "test:e2e": "npx playwright test",
@@ -23,6 +23,7 @@
     "@types/tmi.js": "^1.8.1",
     "@vitejs/plugin-vue": "^2.1.0",
     "autoprefixer": "^10.4.4",
+    "cross-env": "^7.0.3",
     "electron": "18.0.2",
     "electron-builder": "^22.14.5",
     "nano-staged": "^0.6.0",
