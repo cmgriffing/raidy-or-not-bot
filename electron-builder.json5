@@ -30,4 +30,8 @@
   snap: {
     publish: ["github"],
   },
+  publish: {
+    provider: "github",
+    releaseType: "draft",
+  },
 }
