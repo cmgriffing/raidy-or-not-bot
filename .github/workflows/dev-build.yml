@@ -4,6 +4,10 @@ on:
   push:
     branches:
       - development
+
+env:
+  EP_DRAFT: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
