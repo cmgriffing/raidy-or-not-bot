@@ -41,7 +41,7 @@ jobs:
           node-version: 14
 
       - name: Build/release Electron app
-        uses: samuelmeuli/action-electron-builder@v1
+        uses: cmgriffing/action-electron-builder@v1.7.7
         with:
           # GitHub token, automatically provided to the action
           # (No need to define this secret in the repo settings)
