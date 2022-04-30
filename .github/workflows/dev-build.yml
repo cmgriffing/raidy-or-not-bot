@@ -45,3 +45,4 @@ jobs:
           github_token: ${{ secrets.github_token }}
           release: true
           custom_tag: ${{ needs.build.outputs.custom_tag }}
+          build_script_name: "build:dev"
