@@ -26,6 +26,8 @@
     perMachine: false,
     allowToChangeInstallationDirectory: true,
     deleteAppDataOnUninstall: false,
+    installerIcon: "build/icon.ico",
+    installerHeaderIcon: "build/icon.ico",
   },
   snap: {
     publish: ["github"],
