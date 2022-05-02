@@ -7,7 +7,9 @@
   "repository": "https://github.com/cmgriffing/raidy-or-not-bot",
   "scripts": {
     "dev": "node scripts/watch.mjs",
-    "icons": "shx cp -R icons build/icons",
+    "icons:mkdir": "shx mkdir -p build",
+    "icons:cp": "shx cp -R icons build/icons",
+    "icons": "npm-run-all -s icons:mkdir icons:cp",
     "build:vite": "vue-tsc --noEmit --p packages/renderer/tsconfig.json && node scripts/build.mjs",
     "build:vite:dev": "cross-env VITE_DEV_BUILD=true vue-tsc --noEmit --p packages/renderer/tsconfig.json && cross-env VITE_DEV_BUILD=true node scripts/build.mjs",
     "build": "npm-run-all -s build:vite icons",
