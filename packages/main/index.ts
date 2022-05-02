@@ -13,7 +13,6 @@ import tmi from "tmi.js";
 import axios from "axios";
 import { config } from "./config";
 import Store from "electron-store";
-import LightBulbImage from "../images/light-bulb.png";
 import ConnectedImage from "../images/connected.png";
 import DisconnectedImage from "../images/disconnected.png";
 import Logo from "../images/logo.png";
@@ -256,6 +255,7 @@ async function connectTmi({ channelName, apiKey }: TmiConfig) {
     })
     .catch((e: any) => {
       console.log("key is NOT valid", e);
+      console.log({ baseApiUrl, path: "/post-validate-api-key" });
       return false;
     });
 
