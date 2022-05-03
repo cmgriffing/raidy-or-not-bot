@@ -18,6 +18,8 @@ import DisconnectedImage from "../images/disconnected.png";
 import Logo from "../images/logo.png";
 import LogoRed from "../images/logo-red.png";
 
+import { BOT_VERSION } from "./version";
+
 const SHOULD_SHOW_DEV_TOOLS =
   import.meta.env.VITE_DEV_BUILD === ("true" || true) || false;
 
@@ -245,8 +247,6 @@ async function connectTmi({ channelName, apiKey }: TmiConfig) {
     timeout: 5000,
   });
 
-  console.log("axios created");
-
   const validApiKey = await apiAxios
     .post("/post-validate-api-key")
     .then(() => {
@@ -298,6 +298,7 @@ async function connectTmi({ channelName, apiKey }: TmiConfig) {
         toTwitchChannel: target,
         fromTwitchChannel: channelName,
         raidAmount: 42,
+        botVersion: BOT_VERSION,
       })
       .catch(() => {
         connected = false;
@@ -314,6 +315,7 @@ async function connectTmi({ channelName, apiKey }: TmiConfig) {
         toTwitchChannel: channelName,
         fromTwitchChannel: target,
         raidAmount: 42,
+        botVersion: BOT_VERSION,
       })
       .catch(() => {
         connected = false;
