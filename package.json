@@ -1,16 +1,16 @@
 {
-  "name": "raidy-or-not",
+  "name": "raidy-or-not-dev",
   "version": "0.0.18",
   "main": "dist/main/index.cjs",
   "author": "Chris Griffing <cmgriffing@gmail.com>",
   "license": "MIT",
   "repository": "https://github.com/cmgriffing/raidy-or-not-bot",
   "scripts": {
-    "dev": "node scripts/watch.mjs",
+    "dev": "cross-env VITE_DEV_BUILD=true node scripts/watch.mjs",
     "icons:mkdir": "shx mkdir -p build",
     "icons:cp": "shx cp -R icons build/icons",
     "icons": "npm-run-all -s icons:mkdir icons:cp",
-    "prebuild": "node scripts/get-version.js",
+    "prebuild": "node scripts/pre-build.js",
     "build:vite": "vue-tsc --noEmit --p packages/renderer/tsconfig.json && node scripts/build.mjs",
     "build:vite:dev": "cross-env VITE_DEV_BUILD=true vue-tsc --noEmit --p packages/renderer/tsconfig.json && cross-env VITE_DEV_BUILD=true node scripts/build.mjs",
     "build": "npm-run-all -s build:vite icons",
@@ -62,6 +62,7 @@
   "dependencies": {
     "axios": "^0.26.1",
     "electron-store": "^8.0.1",
+    "jwt-decode": "^3.1.2",
     "primevue": "^3.12.5",
     "tmi.js": "^1.8.5"
   }

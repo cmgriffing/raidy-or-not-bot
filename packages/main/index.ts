@@ -34,6 +34,7 @@ const LogoRedImage = nativeImage
 const ipc = electron.ipcMain;
 
 const store = new Store({
+  name: SHOULD_SHOW_DEV_TOOLS ? "config-dev" : "config",
   watch: true,
   schema: {
     channelName: {
@@ -106,6 +107,8 @@ process.env["ELECTRON_DISABLE_SECURITY_WARNINGS"] = "true";
 let win: BrowserWindow | null = null;
 
 async function createWindow() {
+  console.log({ SHOULD_SHOW_DEV_TOOLS });
+
   win = new BrowserWindow({
     title: "Main window",
     webPreferences: {
@@ -113,8 +116,8 @@ async function createWindow() {
       nodeIntegration: true,
       contextIsolation: false,
     },
-    width: 200,
-    height: 300,
+    width: SHOULD_SHOW_DEV_TOOLS ? 800 : 240,
+    height: SHOULD_SHOW_DEV_TOOLS ? 500 : 360,
     // resizable: app.isPackaged ? false : true,
     resizable: SHOULD_SHOW_DEV_TOOLS,
     minimizable: false,
@@ -290,6 +293,10 @@ async function connectTmi({ channelName, apiKey }: TmiConfig) {
       sendConnectedStatus();
       buildTrayMenu();
     });
+
+  client.on("chat", (channel, userstate, message, self) => {
+    console.log({ message });
+  });
 
   client.on("hosting", async (channel, target, viewers) => {
     console.log("HOSTING", channel, target, viewers);
