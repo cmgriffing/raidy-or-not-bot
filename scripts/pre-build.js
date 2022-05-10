@@ -13,11 +13,18 @@ packageJson.name = "raidy-or-not";
 
 const { version } = packageJson;
 
+const versionString = `
+export const BOT_VERSION = "${version}";
+`;
+
 fs.writeFileSync(
   path.resolve(__dirname, "../packages/main/version.ts"),
-  `
-export const BOT_VERSION = "${version}";
-`
+  versionString
+);
+
+fs.writeFileSync(
+  path.resolve(__dirname, "../packages/renderer/version.ts"),
+  versionString
 );
 
 fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
