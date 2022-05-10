@@ -4,7 +4,7 @@ import electron from "electron";
 import ConnectedImage from "../../images/connected.png";
 import DisconnectedImage from "../../images/disconnected.png";
 import jwt_decode from "jwt-decode";
-import { BOT_VERSION } from "../../main/version";
+import { BOT_VERSION } from "./version";
 
 const ipc = electron.ipcRenderer;
 
