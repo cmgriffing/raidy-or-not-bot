@@ -23,7 +23,7 @@ fs.writeFileSync(
 );
 
 fs.writeFileSync(
-  path.resolve(__dirname, "../packages/renderer/version.ts"),
+  path.resolve(__dirname, "../packages/renderer/src/version.ts"),
   versionString
 );
 
