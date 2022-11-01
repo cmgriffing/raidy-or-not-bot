@@ -29,7 +29,7 @@
     "@playwright/test": "^1.22.0",
     "@types/tmi.js": "^1.8.1",
     "@vitejs/plugin-vue": "^2.1.0",
-    "autoprefixer": "^10.4.4",
+    "autoprefixer": "^10.4.13",
     "cross-env": "^7.0.3",
     "electron": "18.0.2",
     "electron-builder": "^22.14.5",
